@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import annecy from '../../assets/br/annecy.jpg';
+import annecy from '../../assets/br/annecy.jpeg';
 import chambery from '../../assets/br/chambery.jpg';
 
 export default function Equipe(params) {
@@ -8,27 +8,27 @@ export default function Equipe(params) {
 
     useEffect(() => {
         const loadImages = async () => {
-            const imagesAnnecy = import.meta.glob('../../assets/br/annecy/*.jpg');
-            const imagesChambery = import.meta.glob('../../assets/br/chambery/*.jpg');
+            const imagesAnnecy = import.meta.glob('../../assets/br/annecy/*.{jpg,jpeg,png}');
+            const imagesChambery = import.meta.glob('../../assets/br/chambery/*.{jpg,jpeg,png}');
 
             const imagesAnnecyArray = Object.entries(imagesAnnecy).map(async ([key, value]) => {
-                const [prenom, role] = key
-                .replace('../../assets/br/annecy/', '')
-                .replace('.jpg', '')
-                .split('-');
+            const [prenom, role] = key
+            .replace('../../assets/br/annecy/', '')
+            .replace(/\.(jpg|jpeg|png)$/, '')
+            .split('_');
 
-                const { default: src } = await value(); 
-                return { ville : "annecy", prenom, role, src };
+            const { default: src } = await value(); 
+            return { ville : "annecy", prenom, role, src };
             });
 
             const imagesChamberyArray = Object.entries(imagesChambery).map(async ([key, value]) => {
-                const [prenom, role] = key
-                .replace('../../assets/br/chambery/', '')
-                .replace('.jpg', '')
-                .split('-');
+            const [prenom, role] = key
+            .replace('../../assets/br/chambery/', '')
+            .replace(/\.(jpg|jpeg|png)$/, '')
+            .split('_');
 
-                const { default: src } = await value(); 
-                return { ville: "chambery", prenom, role, src };
+            const { default: src } = await value(); 
+            return { ville: "chambery", prenom, role, src };
             });
 
             const allImagesArray = [...imagesAnnecyArray, ...imagesChamberyArray];
