@@ -30,15 +30,15 @@ export default function Galerie() {
         <div id='fresque'>
             <div className='scrollable-x'>
                 <ul>
-                    {[...Array(20)].map((_, i) =>
+                    {[...Array(21)].map((_, i) =>
                         <>
-                        <li key={2024-i} className={'year' + (year*1 === 2024-i ? " active" : "")}>
-                            <NavLink to={ '/galerie/' + (2024 - i).toString() } className='year-link'>
-                                { 2024 - i }
+                        <li key={2025-i} className={'year' + (year*1 === 2025-i ? " active" : "")}>
+                            <NavLink to={ '/galerie/' + (2025 - i).toString() } className='year-link'>
+                                { 2025 - i }
                                 <div className='point'></div>
                             </NavLink>
                         </li>
-                        {i < 19 ?
+                        {i < 20 ?
                         <div className='trait'></div>
                         : <></>}
                         </>

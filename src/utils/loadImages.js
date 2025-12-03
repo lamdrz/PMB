@@ -1,4 +1,5 @@
 const imageImports = {
+    2025: import.meta.glob('../assets/annees/2025/*.{png,jpg,jpeg}'),
     2024: import.meta.glob('../assets/annees/2024/*.{png,jpg,jpeg}'),
     2023: import.meta.glob('../assets/annees/2023/*.{png,jpg,jpeg}'),
     2022: import.meta.glob('../assets/annees/2022/*.{png,jpg,jpeg}'),
