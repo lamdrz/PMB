@@ -1,3 +1,8 @@
+#equipe {
+    --nb-membre-annecy: 6;
+    --nb-membre-chambery: 5;
+}
+
 .Outlet section {
     padding: 50px 0;
 }
@@ -141,12 +146,12 @@
 @keyframes Scroll-left {
     0% {transform: translateX(0%); }
     100% {
-        transform: translateX(calc((var(--membre-img-width) + 100px) * -5)); 
+        transform: translateX(calc((var(--membre-img-width) + 100px) * var(--nb-membre-annecy) * -1)); 
     }
 }
 @keyframes Scroll-right {
     0% {
-        transform: translateX(calc((var(--membre-img-width) + 100px) * -5)); 
+        transform: translateX(calc((var(--membre-img-width) + 100px) * var(--nb-membre-chambery) * -1)); 
     }
     100% {transform: translateX(0%); }
 }
