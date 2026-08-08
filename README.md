@@ -39,9 +39,9 @@ const imageImports = {
 
 ### Déploiement
 
-Rien à faire, le site est construit automatiquement avec `npm run build` et publié depuis le dossier `docs/`.
+Rien à faire, le site est construit automatiquement avec `npm run build` et publié depuis le dossier `dist/`.
 
-Le build Vite s'occupe déjà de générer `docs/404.html` et `docs/CNAME`.
+Le build Vite s'occupe déjà de générer `dist/404.html` et `dist/CNAME`.
 
 Le workflow GitHub Actions se trouve dans `.github/workflows/deploy.yml` et s'occupe de publier le site sur GitHub Pages.
 
