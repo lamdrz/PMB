@@ -1,8 +1,8 @@
-export const loadImages = async (year) => {
+export const loadImages = async (tag) => {
     const images = [];
 
     const response = await fetch(
-        `https://res.cloudinary.com/${import.meta.env.VITE_CLOUDINARY_APP_NAME}/image/list/${year}.json`
+        `https://res.cloudinary.com/${import.meta.env.VITE_CLOUDINARY_APP_NAME}/image/list/${tag}.json`
     ).then((res) => {
         if (!res.ok) {
             throw new Error('Error fetching images: ' + res.statusText);

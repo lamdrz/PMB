@@ -1,44 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import annecy from '../../assets/br/annecy.jpeg';
-import chambery from '../../assets/br/chambery.jpg';
+import { loadImages } from '../../utils/loadImages';
 
 export default function Equipe(params) {
-    const [photos, setPhotos] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [annecy, setAnnecy]     = useState(null);
+    const [chambery, setChambery] = useState(null);
+    const [photos, setPhotos]     = useState(null);
 
     useEffect(() => {
-        const loadImages = async () => {
-            const imagesAnnecy = import.meta.glob('../../assets/br/annecy/*.{jpg,jpeg,png}');
-            const imagesChambery = import.meta.glob('../../assets/br/chambery/*.{jpg,jpeg,png}');
+        const fetchImages = async () => {
+            const imagesAnnecy   = await loadImages('br_annecy');
+            const imagesChambery = await loadImages('br_chambery');
 
-            const imagesAnnecyArray = Object.entries(imagesAnnecy).map(async ([key, value]) => {
-            const [prenom, role] = key
-            .replace('../../assets/br/annecy/', '')
-            .replace(/\.(jpg|jpeg|png)$/, '')
-            .split('_');
-
-            const { default: src } = await value(); 
-            return { ville : "annecy", prenom, role, src };
-            });
-
-            const imagesChamberyArray = Object.entries(imagesChambery).map(async ([key, value]) => {
-            const [prenom, role] = key
-            .replace('../../assets/br/chambery/', '')
-            .replace(/\.(jpg|jpeg|png)$/, '')
-            .split('_');
-
-            const { default: src } = await value(); 
-            return { ville: "chambery", prenom, role, src };
-            });
+            const imagesAnnecyArray = imagesAnnecy.map((src) => {
+                const filename = src.split('/').pop();
+                const [prenom, role] = filename.replace(/\.(jpg|jpeg|png)$/, '').split('_');
+                if (prenom === "annecy") {
+                    setAnnecy(src);
+                    return null;
+                }
+                return { ville: "annecy", prenom, role, src };
+            }).filter((item) => item !== null);;
+            
+            const imagesChamberyArray = imagesChambery.map((src) => {
+                const filename = src.split('/').pop();
+                const [prenom, role] = filename.replace(/\.(jpg|jpeg|png)$/, '').split('_');
+                if (prenom === "chambery") {
+                    setChambery(src);
+                    return null;
+                }
+                return { ville: "chambery", prenom, role, src };
+            }).filter((item) => item !== null);
 
             const allImagesArray = [...imagesAnnecyArray, ...imagesChamberyArray];
 
-            const resolvedPhotos = await Promise.all(allImagesArray);
-            setPhotos(resolvedPhotos);
-            setLoading(false);
-        };
+            setPhotos(allImagesArray);
+        }
 
-        loadImages();
+        fetchImages();
     }, []);
     
     return (<section id="equipe">
@@ -49,14 +47,14 @@ export default function Equipe(params) {
             { ["annecy", "chambery"].map((site, i) => (
             <div className={ "bureau equipe-" + site }>
                 { site == "annecy" ? 
-                <img src={annecy} alt={site} className='photo-br'/>
+                    annecy !== null && <img src={annecy} alt={site} className='photo-br'/>
                 : 
-                <img src={chambery} alt={site} className='photo-br'/>
+                    chambery !== null && <img src={chambery} alt={site} className='photo-br'/>
                 }
                 <div className='org-br'>
                     <h3>Bureau d{ site == "annecy" ? "'Annecy" : "e Chambéry"}</h3>
                     <div className='list-br'>
-                        { loading ? <p>Chargement des photos</p> :
+                        { photos === null ? <p>Chargement des photos</p> :
                         [...photos, ...photos].map(({ ville, prenom, role, src }) => (<>
                             { ville === site ?
                             <div key={prenom + '-' + role} className='membre-br'>
